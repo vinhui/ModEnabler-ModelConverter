@@ -29,19 +29,21 @@ def parseFile(file):
 	print("Loading file '" + file + "'")
 	scene = load(file, postprocess.aiProcess_Triangulate)
 
-	for i, mesh in enumerate(scene.meshes):
-		global optimize, calculateNormals
+	if len(scene.meshes) > 0:
+		for i, mesh in enumerate(scene.meshes):
+			global optimize, calculateNormals
 
-		print("Serializing '" + mesh.name + "'")
-		startTime = datetime.now()
+			print("Serializing '" + mesh.name + "'")
+			startTime = datetime.now()
 
-		f = open(parseName(file, mesh.name), 'wb')
-		serialize(f, mesh, optimize, calculateNormals)
-		f.close()
+			f = open(parseName(file, mesh.name), 'wb')
+			serialize(f, mesh, optimize, calculateNormals)
+			f.close()
 		
-		delta = datetime.now() - startTime
-		print("Converting mesh is done, it took " + str(delta.microseconds / 1000) + "ms")
-
+			delta = datetime.now() - startTime
+			print("Converting mesh is done, it took " + str(delta.microseconds / 1000) + "ms")
+	else:
+		print("There don't seem to be any meshes in this file")
 
 def parseName(baseFile, meshName):
 	return os.path.splitext(baseFile)[0] + "-" + meshName + ".mesh"
