@@ -7,3 +7,5 @@ Bindposes and bone weights are not (yet) supported. The exported files will be s
 It's best to do these arguments before the files since otherwise the files before won't be affected. 
 
 Usage example: `python Model_Converter.py -optimize file.blend file2.obj`
+
+Both python 2.7 and 3.5 were tested and work.
