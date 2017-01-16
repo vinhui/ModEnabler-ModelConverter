@@ -1,6 +1,6 @@
 import struct
 
-def serialize(file, mesh, optimize, calculateNormals):
+def serialize(file, mesh, calculateNormals):
 	if mesh.contents.mNumFaces > 65535:
 		print("Mesh has more than 65535 vertices. This is not supported, skipping this file")
 		return None
@@ -19,7 +19,8 @@ def serialize(file, mesh, optimize, calculateNormals):
 	uv4Count = len(mesh.texturecoords[3])			if len(mesh.texturecoords) > 3 else 0
 	vertexCount = mesh.contents.mNumVertices		if mesh.vertices else 0
 
-	file.write(b'\x76\x69\x6e\x68\x75\x69\x2d\x6d\x65\x73\x68')
+	file.write(b'\x47\x5a\x47\x2d\x6d\x65\x73\x68')
+	file.write(struct.pack("<H", 2))
 
 	file.write(struct.pack("<B", nameLength))
 	file.write(asciiName)
@@ -34,7 +35,6 @@ def serialize(file, mesh, optimize, calculateNormals):
 	file.write(struct.pack("<H", uv3Count))
 	file.write(struct.pack("<H", uv4Count))
 	file.write(struct.pack("<H", vertexCount))
-	file.write(struct.pack("<?", optimize))
 	file.write(struct.pack("<?", calculateNormals))
 
 	#if mesh.bindposes is not None:

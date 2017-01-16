@@ -15,9 +15,7 @@ def parseArgs():
 		if index == 0:
 			continue
 
-		if arg == "-optimize":
-			optimize = True
-		elif arg == "-calculateNormals":
+		if arg == "-calculateNormals":
 			calculateNormals = True
 		elif os.path.isfile(arg):
 			parseFile(arg)
